@@ -1,77 +1,71 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <title>Müşteri Kayıt Ol</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f3f6f9;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .box {
-            background: #fff;
-            padding: 30px;
-            width: 320px;
-            border-radius: 10px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-            text-align: center;
-        }
-        input, button {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 12px;
-            border-radius: 6px;
-            border: 1px solid #ccc;
-        }
-        button {
-            background: #16a34a;
-            color: #fff;
-            border: none;
-            cursor: pointer;
-        }
-    </style>
+<meta charset="UTF-8">
+<title>Müşteri Kayıt Ol</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body{
+    font-family:Arial,sans-serif;
+    background:#f3f6f9;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+    margin:0
+}
+.box{
+    background:#fff;
+    padding:30px;
+    width:320px;
+    border-radius:10px;
+    box-shadow:0 8px 20px rgba(0,0,0,.1);
+    text-align:center
+}
+input,button{
+    width:100%;
+    padding:10px;
+    margin-bottom:12px;
+    border-radius:6px;
+    border:1px solid #ccc
+}
+button{
+    background:#16a34a;
+    color:#fff;
+    border:none;
+    cursor:pointer
+}
+</style>
 </head>
 <body>
 
 <div class="box">
-    <h2>Müşteri Kayıt Ol</h2>
-    <input type="text" id="username" placeholder="Kullanıcı Adı">
-    <input type="email" id="email" placeholder="E-posta">
-    <input type="password" id="password" placeholder="Şifre">
-    <button onclick="register()">Kayıt Ol</button>
+<h2>Müşteri Kayıt Ol</h2>
+<input id="username" placeholder="Kullanıcı Adı">
+<input id="email" placeholder="E-posta">
+<input id="password" type="password" placeholder="Şifre">
+<button onclick="register()">Kayıt Ol</button>
 </div>
 
 <script>
-    function register() {
-        const username = document.getElementById("username").value.trim();
-        const email = document.getElementById("email").value.trim();
-        const password = document.getElementById("password").value.trim();
+function register(){
+    const u=document.getElementById("username").value.trim();
+    const e=document.getElementById("email").value.trim();
+    const p=document.getElementById("password").value.trim();
 
-        if (!username || !email || !password) {
-            alert("Tüm alanları doldur!");
-            return;
-        }
+    if(!u||!e||!p){alert("Tüm alanları doldur");return;}
 
-        const users = JSON.parse(localStorage.getItem("customers")) || [];
-
-        if (users.some(u => u.username === username)) {
-            alert("Bu kullanıcı adı zaten var!");
-            return;
-        }
-
-        users.push({ username, email, password });
-        localStorage.setItem("customers", JSON.stringify(users));
-
-        alert("Kayıt başarılı! Giriş yapabilirsin.");
-        window.location.href = "index.html";
+    const users=JSON.parse(localStorage.getItem("customers"))||[];
+    if(users.some(x=>x.username===u)){
+        alert("Bu kullanıcı adı zaten var");
+        return;
     }
-</script>
 
+    users.push({username:u,email:e,password:p});
+    localStorage.setItem("customers",JSON.stringify(users));
+    alert("Kayıt başarılı");
+    location.href="index.html";
+}
+</script>
 </body>
 </html>
