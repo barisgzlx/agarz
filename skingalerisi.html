@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Skin Galerim</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f1f5f9;
+        }
+
+        header {
+            background: #1e293b;
+            color: #fff;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header span {
+            font-size: 16px;
+        }
+
+        header button {
+            background: #dc2626;
+            border: none;
+            color: #fff;
+            padding: 8px 14px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .container {
+            padding: 30px;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        .upload-box {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .upload-box input {
+            flex: 1;
+        }
+
+        .upload-box button {
+            background: #2563eb;
+            border: none;
+            color: #fff;
+            padding: 10px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        .gallery img {
+            width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <span id="welcomeText"></span>
+    <button onclick="logout()">Çıkış Yap</button>
+</header>
+
+<div class="container">
+    <h2>Skin Galerim</h2>
+
+    <div class="upload-box">
+        <input type="file" id="skinInput" accept="image/*">
+        <button onclick="uploadSkin()">Yükle</button>
+    </div>
+
+    <div class="gallery" id="gallery"></div>
+</div>
+
+<script>
+    // GİRİŞ KONTROLÜ
+    const user = JSON.parse(localStorage.getItem("customerUser"));
+    if (!user) {
+        window.location.href = "index.html";
+    }
+
+    document.getElementById("welcomeText").innerText =
+        "Hoş geldin, " + user.username;
+
+    const storageKey = "skins_" + user.username;
+
+    // SKIN YÜKLEME
+    function uploadSkin() {
+        const input = document.getElementById("skinInput");
+        const file = input.files[0];
+
+        if (!file) {
+            alert("Lütfen bir görsel seçin");
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const skins = JSON.parse(localStorage.getItem(storageKey)) || [];
+            skins.push(e.target.result);
+            localStorage.setItem(storageKey, JSON.stringify(skins));
+            renderGallery();
+            input.value = "";
+        };
+        reader.readAsDataURL(file);
+    }
+
+    // GALERİYİ GÖSTER
+    function renderGallery() {
+        const gallery = document.getElementById("gallery");
+        gallery.innerHTML = "";
+
+        const skins = JSON.parse(localStorage.getItem(storageKey)) || [];
+        skins.forEach(src => {
+            const img = document.createElement("img");
+            img.src = src;
+            gallery.appendChild(img);
+        });
+    }
+
+    renderGallery();
+
+    // ÇIKIŞ
+    function logout() {
+        localStorage.removeItem("customerUser");
+        window.location.href = "index.html";
+    }
+</script>
+
+</body>
+</html>
