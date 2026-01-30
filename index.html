@@ -92,27 +92,26 @@
 </div>
 
 <script>
-    function login() {
-        const username = document.getElementById("username").value.trim();
-        const password = document.getElementById("password").value.trim();
+function login() {
+    const username = document.getElementById("username").value.trim();
+    const password = document.getElementById("password").value.trim();
 
-        const users = JSON.parse(localStorage.getItem("customers")) || [];
+    const users = JSON.parse(localStorage.getItem("customers")) || [];
 
-        const user = users.find(
-            u => u.username === username && u.password === password
-        );
+    const user = users.find(
+        u => u.username === username && u.password === password
+    );
 
-        if (!user) {
-            alert("Kullanıcı adı veya şifre yanlış!");
-            return;
-        }
-
-        localStorage.setItem("customerUser", JSON.stringify(user));
-
-        // 🔥 DOĞRU YÖNLENDİRME
-        window.location.href = "skingalerisi.html";
+    if (!user) {
+        alert("Kullanıcı adı veya şifre yanlış!");
+        return;
     }
+
+    localStorage.setItem("customerUser", JSON.stringify(user));
+    window.location.href = "skingalerisi.html";
+}
 </script>
+
 
 </body>
 </html>
