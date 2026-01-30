@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Müşteri Girişi</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4f6f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .login-container {
+            background: #fff;
+            width: 360px;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 12px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            background: #2563eb;
+            color: #fff;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #1e40af;
+        }
+
+        .links {
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        .links a {
+            display: block;
+            margin-top: 8px;
+            color: #2563eb;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .admin-login {
+            position: absolute;
+            top: -45px;
+            right: 0;
+        }
+
+        .admin-login a {
+            background: #111827;
+            color: #fff;
+            padding: 8px 12px;
+            border-radius: 5px;
+            font-size: 13px;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-container">
+
+        <!-- Yönetici Giriş -->
+        <div class="admin-login">
+            <a href="admin-login.html">Yönetici Paneli</a>
+        </div>
+
+        <h2>Müşteri Girişi</h2>
+
+        <form>
+            <input type="text" placeholder="E-posta veya Kullanıcı Adı" required>
+            <input type="password" placeholder="Şifre" required>
+
+            <button type="submit">Giriş Yap</button>
+        </form>
+
+        <div class="links">
+            <a href="register.html">Kayıt Ol</a>
+            <a href="forgot-password.html">Şifremi Unuttum</a>
+        </div>
+
+    </div>
+
+</body>
+</html>
