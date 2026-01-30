@@ -1,117 +1,82 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <title>Müşteri Girişi</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f3f6f9;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-
-        .admin-btn {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: #111827;
-            color: #fff;
-            padding: 8px 14px;
-            border-radius: 6px;
-            text-decoration: none;
-            font-size: 14px;
-        }
-
-        .login-box {
-            background: #fff;
-            padding: 30px;
-            width: 320px;
-            border-radius: 10px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-            text-align: center;
-        }
-
-        .login-box h2 {
-            margin-bottom: 20px;
-        }
-
-        .login-box input {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 12px;
-            border-radius: 6px;
-            border: 1px solid #ccc;
-        }
-
-        .login-box button {
-            width: 100%;
-            padding: 10px;
-            background: #2563eb;
-            border: none;
-            color: #fff;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 15px;
-        }
-
-        .links {
-            margin-top: 15px;
-        }
-
-        .links a {
-            display: block;
-            margin-top: 6px;
-            font-size: 14px;
-            text-decoration: none;
-            color: #2563eb;
-        }
-    </style>
+<meta charset="UTF-8">
+<title>Müşteri Girişi</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body{
+    font-family:Arial,sans-serif;
+    background:#f3f6f9;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+    margin:0
+}
+.login-box{
+    background:#fff;
+    padding:30px;
+    width:320px;
+    border-radius:10px;
+    box-shadow:0 8px 20px rgba(0,0,0,.1);
+    text-align:center
+}
+input,button{
+    width:100%;
+    padding:10px;
+    margin-bottom:12px;
+    border-radius:6px;
+    border:1px solid #ccc
+}
+button{
+    background:#2563eb;
+    color:#fff;
+    border:none;
+    cursor:pointer
+}
+a{font-size:14px;display:block;margin-top:6px;text-decoration:none}
+.admin-btn{
+    position:absolute;
+    top:20px;
+    right:20px;
+    background:#111827;
+    color:#fff;
+    padding:8px 14px;
+    border-radius:6px;
+    text-decoration:none
+}
+</style>
 </head>
 <body>
 
 <a class="admin-btn" href="admin-login.html">Yönetici Paneli</a>
 
 <div class="login-box">
-    <h2>Müşteri Girişi</h2>
-
-    <input type="text" id="username" placeholder="Kullanıcı Adı">
-    <input type="password" id="password" placeholder="Şifre">
-
-    <button onclick="login()">Giriş Yap</button>
-
-    <div class="links">
-        <a href="register.html">Kayıt Ol</a>
-        <a href="forgot-password.html">Şifremi Unuttum</a>
-    </div>
+<h2>Müşteri Girişi</h2>
+<input id="username" placeholder="Kullanıcı Adı">
+<input id="password" type="password" placeholder="Şifre">
+<button onclick="login()">Giriş Yap</button>
+<a href="register.html">Kayıt Ol</a>
+<a href="forgot-password.html">Şifremi Unuttum</a>
 </div>
 
 <script>
-function login() {
-    const username = document.getElementById("username").value.trim();
-    const password = document.getElementById("password").value.trim();
+function login(){
+    const u=document.getElementById("username").value.trim();
+    const p=document.getElementById("password").value.trim();
 
-    const users = JSON.parse(localStorage.getItem("customers")) || [];
+    const users=JSON.parse(localStorage.getItem("customers"))||[];
+    const user=users.find(x=>x.username===u && x.password===p);
 
-    const user = users.find(
-        u => u.username === username && u.password === password
-    );
-
-    if (!user) {
-        alert("Kullanıcı adı veya şifre yanlış!");
+    if(!user){
+        alert("Kullanıcı adı veya şifre yanlış");
         return;
     }
 
-    localStorage.setItem("customerUser", JSON.stringify(user));
-    window.location.href = "skingalerisi.html";
+    localStorage.setItem("customerUser",JSON.stringify(user));
+    location.href="skingalerisi.html";
 }
 </script>
-
-
 </body>
 </html>
