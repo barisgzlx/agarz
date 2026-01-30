@@ -1,132 +1,75 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <title>Skin Galerim</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #f3f6f9;
-        }
-
-        header {
-            background: #1f2937;
-            color: #fff;
-            padding: 15px 25px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        header h3 {
-            margin: 0;
-            font-weight: normal;
-        }
-
-        header button {
-            background: #ef4444;
-            border: none;
-            color: #fff;
-            padding: 8px 14px;
-            border-radius: 6px;
-            cursor: pointer;
-        }
-
-        main {
-            padding: 30px;
-        }
-
-        h2 {
-            margin-top: 0;
-        }
-
-        .upload-box {
-            background: #fff;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 25px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-        }
-
-        .gallery {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-
-        .gallery img {
-            width: 160px;
-            height: 160px;
-            object-fit: cover;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
-    </style>
+<meta charset="UTF-8">
+<title>Skin Galerim</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body{margin:0;font-family:Arial;background:#f3f6f9}
+header{
+    background:#1f2937;
+    color:#fff;
+    padding:15px 25px;
+    display:flex;
+    justify-content:space-between
+}
+button{background:#ef4444;color:#fff;border:none;padding:8px 14px;border-radius:6px;cursor:pointer}
+main{padding:25px}
+.gallery{display:flex;gap:15px;flex-wrap:wrap}
+.gallery img{width:150px;height:150px;object-fit:cover;border-radius:10px}
+</style>
 </head>
 <body>
 
+<script>
+const user=JSON.parse(localStorage.getItem("customerUser"));
+if(!user) location.href="index.html";
+</script>
+
 <header>
-    <h3 id="welcomeText"></h3>
-    <button onclick="logout()">Çıkış Yap</button>
+<div>Hoş geldin, <b id="u"></b></div>
+<button onclick="logout()">Çıkış Yap</button>
 </header>
 
 <main>
-    <h2>Skin Galerim</h2>
-
-    <div class="upload-box">
-        <input type="file" id="fileInput" accept="image/*">
-        <button onclick="uploadSkin()">Yükle</button>
-    </div>
-
-    <div class="gallery" id="gallery"></div>
+<h2>Skin Galerim</h2>
+<input type="file" id="file">
+<button onclick="upload()">Yükle</button>
+<div class="gallery" id="g"></div>
 </main>
 
 <script>
-    // GİRİŞ KONTROLÜ
-    const user = JSON.parse(localStorage.getItem("customerUser"));
-    if (!user) {
-        window.location.href = "index.html";
-    }
+document.getElementById("u").innerText=user.username;
+const key="skins_"+user.username;
+const g=document.getElementById("g");
 
-    document.getElementById("welcomeText").innerText =
-        "Hoş geldin, " + user.username;
+function load(){
+    g.innerHTML="";
+    (JSON.parse(localStorage.getItem(key))||[])
+    .forEach(x=>{
+        const i=document.createElement("img");
+        i.src=x; g.appendChild(i);
+    });
+}
 
-    const gallery = document.getElementById("gallery");
-    const storageKey = "skins_" + user.username;
+function upload(){
+    const f=document.getElementById("file").files[0];
+    if(!f) return;
+    const r=new FileReader();
+    r.onload=()=>{
+        const arr=JSON.parse(localStorage.getItem(key))||[];
+        arr.push(r.result);
+        localStorage.setItem(key,JSON.stringify(arr));
+        load();
+    };
+    r.readAsDataURL(f);
+}
 
-    function loadSkins() {
-        gallery.innerHTML = "";
-        const skins = JSON.parse(localStorage.getItem(storageKey)) || [];
-        skins.forEach(src => {
-            const img = document.createElement("img");
-            img.src = src;
-            gallery.appendChild(img);
-        });
-    }
-
-    function uploadSkin() {
-        const file = document.getElementById("fileInput").files[0];
-        if (!file) return alert("Dosya seçmedin!");
-
-        const reader = new FileReader();
-        reader.onload = function () {
-            const skins = JSON.parse(localStorage.getItem(storageKey)) || [];
-            skins.push(reader.result);
-            localStorage.setItem(storageKey, JSON.stringify(skins));
-            loadSkins();
-        };
-        reader.readAsDataURL(file);
-    }
-
-    function logout() {
-        localStorage.removeItem("customerUser");
-        window.location.href = "index.html";
-    }
-
-    loadSkins();
+function logout(){
+    localStorage.removeItem("customerUser");
+    location.href="index.html";
+}
+load();
 </script>
-
 </body>
 </html>
